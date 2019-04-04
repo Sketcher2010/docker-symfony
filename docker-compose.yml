@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+  apache:
+    build: .docker/apache
+    container_name: nefco_apache
+    ports:
+      - 8888:80
+    volumes:
+      - .docker/config/vhosts:/etc/apache2/sites-enabled
+      - ./nefco:/home/wwwroot/nefco
+    depends_on:
+      - php
+
+  php:
+    build: .docker/php
+    container_name: nefco_php
+    volumes:
+      - ./nefco:/home/wwwroot/nefco
+    environment:
+      - maildev_host=nefco_maildev
+    depends_on:
+      - maildev
+      - postgres
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - '6432:5432'
+    container_name: 'postgresql'
+    working_dir: /app
+    restart: always
+    environment:
+      POSTGRES_DB: 'grants'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - .docker/data/dump:/app/dump
+      - .docker/data/postgresql:/var/lib/postgresql/data
+
+  maildev:
+    image: djfarrelly/maildev
+    container_name: nefco_maildev
+    ports:
+      - 8001:80

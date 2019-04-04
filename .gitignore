@@ -1,4 +1,8 @@
 .idea
 .idea/*
-
+.DS_Store
 .env
+.docker/data/
+/nefco/public/bundles/
+/nefco/var/
+/nefco/vendor/
