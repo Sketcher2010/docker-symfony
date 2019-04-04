@@ -3,22 +3,22 @@ version: '3.1'
 services:
   apache:
     build: .docker/apache
-    container_name: nefco_apache
+    container_name: symfony_apache
     ports:
       - 8888:80
     volumes:
       - .docker/config/vhosts:/etc/apache2/sites-enabled
-      - ./nefco:/home/wwwroot/nefco
+      - ./symfony:/home/wwwroot/symfony
     depends_on:
       - php
 
   php:
     build: .docker/php
-    container_name: nefco_php
+    container_name: symfony_php
     volumes:
-      - ./nefco:/home/wwwroot/nefco
+      - ./symfony:/home/wwwroot/symfony
     environment:
-      - maildev_host=nefco_maildev
+      - maildev_host=symfony_maildev
     depends_on:
       - maildev
       - postgres
@@ -40,6 +40,6 @@ services:
 
   maildev:
     image: djfarrelly/maildev
-    container_name: nefco_maildev
+    container_name: symfony_maildev
     ports:
       - 8001:80

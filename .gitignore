@@ -3,7 +3,7 @@
 .DS_Store
 .env
 .docker/data/
-/nefco/public/bundles/
-/nefco/var/
-/nefco/vendor/
-/nefco/.env
+/symfony/public/bundles/
+/symfony/var/
+/symfony/vendor/
+/symfony/.env
