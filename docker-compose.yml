@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+  apache:
+    build: .docker/apache
+    container_name: symfony_apache
+    ports:
+      - 8888:80
+    volumes:
+      - .docker/config/vhosts:/etc/apache2/sites-enabled
+      - ./symfony:/home/wwwroot/symfony
+    depends_on:
+      - php
+
+  php:
+    build: .docker/php
+    container_name: symfony_php
+    volumes:
+      - ./symfony:/home/wwwroot/symfony
+    environment:
+      - maildev_host=symfony_maildev
+    depends_on:
+      - maildev
+      - postgres
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - '6432:5432'
+    container_name: 'postgresql'
+    working_dir: /app
+    restart: always
+    environment:
+      POSTGRES_DB: 'grants'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - .docker/data/dump:/app/dump
+      - .docker/data/postgresql:/var/lib/postgresql/data
+
+  maildev:
+    image: djfarrelly/maildev
+    container_name: symfony_maildev
+    ports:
+      - 8001:80

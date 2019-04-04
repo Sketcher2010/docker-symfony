@@ -1,4 +1,9 @@
 .idea
 .idea/*
-
+.DS_Store
 .env
+.docker/data/
+/symfony/public/bundles/
+/symfony/var/
+/symfony/vendor/
+/symfony/.env
