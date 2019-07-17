@@ -52,6 +52,8 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 RUN echo "dev ALL=(ALL) ALL" > /etc/sudoers
 
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+
 WORKDIR /home/wwwroot/
 ##</romaricp>##
 

@@ -31,7 +31,7 @@ services:
     working_dir: /app
     restart: always
     environment:
-      POSTGRES_DB: 'grants'
+      POSTGRES_DB: 'db_name'
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
     volumes:
